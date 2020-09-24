@@ -28,7 +28,7 @@
                 {{ post.data.selftext }}
                 <p>Дата: {{ post.data.created_utc }}</p>
               <p>Рейтинг: {{ post.data.score }}</p>
-                <p>Число комментариев: {{ post.data.num_comments|format_num_comments}}</p>
+                <p>Число комментариев: {{ post.data.num_comments|format_num_comments|safe}}</p>
               </div>
               <div class="card-action">
                 <a href="{{ post.data.url }}">Ссылка на материал</a>
