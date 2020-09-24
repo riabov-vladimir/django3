@@ -33,14 +33,29 @@ def format_num_comments(value):
 
 
 @register.filter
-def score_format(value):
+def score_format(value: int, arg: str):
     if value < -5:
         return 'всё плохо'
     elif -5 < value < 5:
         return 'нейтрально'
     elif 5 < value:
         return 'хорошо'
+    elif value == None:
+        return arg
 
+
+@register.filter
+def format_selftext(value: str, count) -> str:
+    text_split = value.split()
+    count = int(count)
+
+    if len(text_split) <= count*2:
+        return f'TOO SHORT {value}'
+
+    left = ' '.join(text_split[:count])
+    right = ' '.join(text_split[-count:])
+
+    return f'{left}  . . .  {right}'
 
 
 """
@@ -59,5 +74,9 @@ format_selftext:
 """
 
 if __name__ == '__main__':
-
-    pass
+    txt = "Discussion. of using, Python in a professional environment, getting jobs in Python and more! **This thread is not for recruitment, please see** r/PythonJobs **or the thread in the sidebar for that.**"
+    txt_l = txt.split()  #[5:]
+    # x = txt.rpartition("Python")
+    ll = len(txt_l)
+    print(txt_l[:5])
+    print(txt_l)

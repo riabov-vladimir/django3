@@ -25,9 +25,9 @@
               <div class="card-content white-text">
                 <span class="card-title">{{ post.data.title }}
                 </span>
-                {{ post.data.selftext }}
+                {{ post.data.selftext|format_selftext:"10" }}
                 <p>Дата: {{ post.data.created_utc|format_date }}</p>
-              <p>Рейтинг: {{ post.data.score|score_format }}</p>
+              <p>Рейтинг: {{ post.data.score|score_format:"рейтинг отсутсвует" }}</p>
                 <p>Число комментариев: {{ post.data.num_comments|format_num_comments|safe }}</p>
               </div>
               <div class="card-action">
