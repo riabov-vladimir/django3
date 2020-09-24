@@ -1,5 +1,6 @@
 from django import template
 import datetime
+import time
 
 
 register = template.Library()
@@ -7,9 +8,22 @@ register = template.Library()
 
 @register.filter
 def format_date(value):
-    # Ваш код
-    return value
 
+    delta = time.time() - value
+    print(delta)
+    if delta < 600:
+        return 'ТОЛЬКО ЧТО'
+    elif 600 <= delta < 86400:
+        result = int(delta / 3600)
+        return f'{result} часов назад'
+    else:
+        return datetime.datetime.fromtimestamp(delta).strftime('%Y-%M-%d')
+
+
+"""format_date: форматирует дату по следующим правилам
+Если пост был меньше 10 минут назад, пишет "только что"
+Если пост был меньше 24 часов назад, пишет "X часов назад"
+Если пост был больше 24 часов назад, выводит дату в формате "Год-месяц-число"""
 
 # необходимо добавить фильтр для поля `score`
 
@@ -31,10 +45,7 @@ def format_num_comments(value):
 
 В директории templatetags/news_filters.py необходимо реализовать следующие фильтры:
 
-format_date: форматирует дату по следующим правилам
-Если пост был меньше 10 минут назад, пишет "только что"
-Если пост был меньше 24 часов назад, пишет "X часов назад"
-Если пост был больше 24 часов назад, выводит дату в формате "Год-месяц-число"
+
 форматирование поля score (название на ваше усмотрение):
 Рейтинг меньше -5, пишет "все плохо"
 Рейтинг от -5 до 5 – "нейтрально"
@@ -50,3 +61,9 @@ format_selftext:
 
 Знаки препинания остаются, обрезаются только слова.
 """
+
+if __name__ == '__main__':
+
+    value = 100893867
+
+    print(format_date(value))
